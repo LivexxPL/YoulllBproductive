@@ -1,0 +1,18 @@
+{
+  "appId": "com.youlllbproductive.app",
+  "appName": "YoulllBproductive",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#F4F5F8"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_notify",
+      "iconColor": "#4F6BF5"
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
+    }
+  }
+}

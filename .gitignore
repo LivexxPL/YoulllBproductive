@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+coverage
+# Android build outputs (projekt android/ jest w repo, ale bez buildów)
+android/app/build
+android/build
+android/.gradle
+android/local.properties
+android/app/release
+*.apk
+*.aab
+!docs/*.apk

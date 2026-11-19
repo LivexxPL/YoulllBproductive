@@ -1,0 +1,365 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 6px 20px -8px rgb(16 24 40 / 0.1);
+  --shadow-pop: 0 2px 6px rgb(16 24 40 / 0.06), 0 24px 48px -12px rgb(16 24 40 / 0.22);
+  --shadow-fab: 0 10px 24px -6px rgb(79 107 245 / 0.55), 0 2px 6px rgb(79 107 245 / 0.3);
+
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --bg: #f4f5f8;
+  --surface: #ffffff;
+  --surface-2: #f0f2f6;
+  --surface-3: #e7eaf0;
+  --line: rgb(15 23 42 / 0.07);
+  --line-strong: rgb(15 23 42 / 0.13);
+  --ink: #101828;
+  --ink-2: #344054;
+  --muted: #667085;
+  --faint: #98a2b3;
+  --accent: #4f6bf5;
+  --accent-ink: #ffffff;
+  --accent-soft: rgb(79 107 245 / 0.1);
+  --danger: #e5484d;
+  --danger-soft: rgb(229 72 77 / 0.1);
+  --success: #12a37a;
+  --warn: #e8a317;
+  --glass: rgb(255 255 255 / 0.78);
+  --grid-line: rgb(15 23 42 / 0.06);
+  --grid-line-half: rgb(15 23 42 / 0.03);
+  --event-mix: 14%;
+  --event-mix-strong: 22%;
+
+  /* Bezpieczne obszary (Capacitor wstrzykuje --safe-area-inset-*; w przeglądarce env()) */
+  --safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --safe-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --safe-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0b0d12;
+  --surface: #141821;
+  --surface-2: #1a1f2a;
+  --surface-3: #232937;
+  --line: rgb(255 255 255 / 0.07);
+  --line-strong: rgb(255 255 255 / 0.13);
+  --ink: #eef1f7;
+  --ink-2: #c9cfdb;
+  --muted: #8b94a7;
+  --faint: #5d6678;
+  --accent: #7088ff;
+  --accent-ink: #0b0d12;
+  --accent-soft: rgb(112 136 255 / 0.16);
+  --danger: #ff6b70;
+  --danger-soft: rgb(255 107 112 / 0.14);
+  --success: #3ccf9f;
+  --warn: #f5b83d;
+  --glass: rgb(20 24 33 / 0.78);
+  --grid-line: rgb(255 255 255 / 0.06);
+  --grid-line-half: rgb(255 255 255 / 0.025);
+  --event-mix: 22%;
+  --event-mix-strong: 32%;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -10px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+    transition: background-color 0.3s ease;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+  ::selection {
+    background: var(--accent-soft);
+  }
+  input[type='date'],
+  input[type='time'] {
+    position: relative;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  .glass {
+    background: var(--glass);
+    backdrop-filter: saturate(1.6) blur(18px);
+    -webkit-backdrop-filter: saturate(1.6) blur(18px);
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 550;
+    background: var(--surface-2);
+    color: var(--ink-2);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s var(--ease-spring);
+    white-space: nowrap;
+  }
+  .chip:active {
+    transform: scale(0.96);
+  }
+  .chip[data-active='true'] {
+    background: var(--ink);
+    color: var(--surface);
+  }
+  .field {
+    width: 100%;
+    background: var(--surface-2);
+    border-radius: 0.875rem;
+    padding: 0.75rem 0.875rem;
+    outline: none;
+    transition:
+      box-shadow 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .field:focus {
+    background: var(--surface);
+    box-shadow:
+      0 0 0 1.5px var(--accent),
+      0 0 0 5px var(--accent-soft);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding: 0 1.125rem;
+    border-radius: 0.875rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition:
+      transform 0.15s var(--ease-spring),
+      background-color 0.15s ease,
+      opacity 0.15s ease;
+  }
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 16px -6px rgb(79 107 245 / 0.6);
+  }
+  .dark .btn-primary {
+    color: #0b0d12;
+  }
+  .btn-primary:disabled {
+    opacity: 0.45;
+    box-shadow: none;
+  }
+  .btn-ghost {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--surface-3);
+  }
+  .btn-danger {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.875rem;
+    color: var(--ink-2);
+    transition:
+      background-color 0.15s ease,
+      transform 0.15s var(--ease-spring);
+  }
+  .icon-btn:hover {
+    background: var(--surface-2);
+  }
+  .icon-btn:active {
+    transform: scale(0.92);
+  }
+
+  /* Bloki wydarzeń w kalendarzu – kolor kategorii w --c */
+  .event {
+    background: color-mix(in oklab, var(--c) var(--event-mix), var(--surface));
+    color: var(--ink);
+    border-left: 3px solid var(--c);
+  }
+  .event-solid {
+    background: color-mix(in oklab, var(--c) var(--event-mix-strong), var(--surface));
+  }
+  .event-done {
+    opacity: 0.55;
+  }
+  .event-done .event-title {
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in oklab, var(--ink) 40%, transparent);
+  }
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--c);
+    flex: none;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  .pt-safe {
+    padding-top: var(--safe-top);
+  }
+  .pb-safe {
+    padding-bottom: var(--safe-bottom);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: pulse-ring 1.6s var(--ease-spring) infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(-14deg);
+  }
+  30% {
+    transform: rotate(12deg);
+  }
+  45% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+.animate-ring {
+  animation: shake 1.1s ease-in-out infinite;
+  transform-origin: 50% 15%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
