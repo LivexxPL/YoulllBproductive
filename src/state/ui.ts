@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import type { ReminderDraft } from '../lib/types';
 
-export type Route = 'today' | 'calendar' | 'all' | 'settings';
+export type Route = 'today' | 'calendar' | 'all' | 'counters' | 'settings';
 
-const ROUTES: Route[] = ['today', 'calendar', 'all', 'settings'];
-const HASH: Record<Route, string> = { today: 'dzis', calendar: 'kalendarz', all: 'lista', settings: 'ustawienia' };
+const ROUTES: Route[] = ['today', 'calendar', 'all', 'counters', 'settings'];
+const HASH: Record<Route, string> = { today: 'dzis', calendar: 'kalendarz', all: 'lista', counters: 'liczniki', settings: 'ustawienia' };
 
 function routeFromHash(): Route {
   const h = location.hash.replace(/^#\/?/, '');

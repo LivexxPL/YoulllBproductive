@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type ReactNode } from 'react';
 import { motion } from 'motion/react';
-import { CalendarDays, ListTodo, Plus, Settings, Sun } from 'lucide-react';
+import { CalendarDays, Hash, ListTodo, Plus, Settings, Sun } from 'lucide-react';
 import { LogoMark, Wordmark } from './Logo';
 import { MiniMonth } from './MiniMonth';
 import { useCategories, useReminders } from '../data/store';
@@ -14,6 +14,7 @@ const NAV: Array<{ route: Route; label: string; icon: typeof Sun }> = [
   { route: 'today', label: 'Dziś', icon: Sun },
   { route: 'calendar', label: 'Kalendarz', icon: CalendarDays },
   { route: 'all', label: 'Wszystkie', icon: ListTodo },
+  { route: 'counters', label: 'Liczniki', icon: Hash },
   { route: 'settings', label: 'Ustawienia', icon: Settings },
 ];
 
@@ -41,7 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       if (e.key === 'n' || e.key === 'q') {
         e.preventDefault();
         setQuickAdd(true);
-      } else if (['1', '2', '3', '4'].includes(e.key)) navigate(NAV[Number(e.key) - 1].route);
+      } else if (['1', '2', '3', '4', '5'].includes(e.key)) navigate(NAV[Number(e.key) - 1].route);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -52,7 +53,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <Sidebar route={route} badge={badge} overdue={today.overdue.length} />
       <main className="relative min-w-0 flex-1 pb-[calc(5.5rem+var(--safe-bottom))] lg:pb-0">{children}</main>
       <BottomNav route={route} badge={badge} />
-      {route !== 'settings' && (
+      {route !== 'settings' && route !== 'counters' && (
         <motion.button
           initial={{ scale: 0, rotate: -45 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -180,7 +181,7 @@ function BottomNav({ route, badge }: { route: Route; badge: number }) {
   const setFocusCategory = useUi((s) => s.setFocusCategory);
   return (
     <nav className="glass fixed inset-x-0 bottom-0 z-40 border-t border-line pb-safe lg:hidden">
-      <div className="mx-auto grid h-16 max-w-lg grid-cols-4 px-2">
+      <div className="mx-auto grid h-16 max-w-lg grid-cols-5 px-1">
         {NAV.map(({ route: r, label, icon: Icon }) => {
           const active = route === r;
           return (
@@ -193,7 +194,7 @@ function BottomNav({ route, badge }: { route: Route; badge: number }) {
               className="relative flex flex-col items-center justify-center gap-0.5"
               aria-current={active ? 'page' : undefined}
             >
-              <span className="relative grid h-8 w-14 place-items-center">
+              <span className="relative grid h-8 w-12 place-items-center">
                 {active && (
                   <motion.span
                     layoutId="bottom-active"

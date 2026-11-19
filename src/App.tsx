@@ -13,6 +13,7 @@ import { TodayScreen } from './screens/TodayScreen';
 import { CalendarScreen } from './screens/CalendarScreen';
 import { AllScreen } from './screens/AllScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
+import { CountersScreen } from './screens/CountersScreen';
 import { initNativeShell } from './lib/nativeShell';
 import { AlarmOverlay } from './components/AlarmOverlay';
 import { startNotifications } from './notifications/service';
@@ -62,6 +63,7 @@ export function App() {
             {route === 'today' && <TodayScreen />}
             {route === 'calendar' && <CalendarScreen />}
             {route === 'all' && <AllScreen />}
+            {route === 'counters' && <CountersScreen />}
             {route === 'settings' && <SettingsScreen />}
           </motion.div>
         </AnimatePresence>
