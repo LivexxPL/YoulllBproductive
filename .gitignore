@@ -13,4 +13,3 @@ android/local.properties
 android/app/release
 *.apk
 *.aab
-!docs/*.apk

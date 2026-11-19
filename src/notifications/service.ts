@@ -110,7 +110,7 @@ export function resync() {
 }
 
 function fireInApp(a: { key: string; reminderId: string; occurrence: string; title: string; at: Date }, withSound: boolean) {
-  useAlarms.getState().push({ key: a.key, reminderId: a.reminderId, occurrence: a.occurrence, title: a.title.replace(/^❗ /, ''), at: a.at.toISOString() });
+  useAlarms.getState().push({ key: a.key, reminderId: a.reminderId, occurrence: a.occurrence, title: a.title.replace(/^(❗|🔔) /u, ''), at: a.at.toISOString() });
   const s = useSettings.getState();
   if (withSound && s.soundEnabled) playAlarm({ loop: s.loudAlarms, maxMs: s.loudAlarms ? 60_000 : 4_000 });
 }
@@ -130,6 +130,15 @@ export async function startNotifications() {
     const { LocalNotifications } = await import('@capacitor/local-notifications');
     const { App } = await import('@capacitor/app');
     await native.initNativeChannels();
+    // Przy pierwszym uruchomieniu od razu zapytaj o zgodę (Android 13+: POST_NOTIFICATIONS)
+    try {
+      if ((await native.nativePermission()) === 'prompt' && !localStorage.getItem('ybp-notif-asked')) {
+        localStorage.setItem('ybp-notif-asked', '1');
+        await native.requestNativePermission();
+      }
+    } catch {
+      /* brak zgody – baner na ekranie „Dziś” */
+    }
     LocalNotifications.addListener('localNotificationActionPerformed', ({ actionId, notification }) => {
       const extra = (notification.extra ?? {}) as { reminderId?: string; occurrence?: string; key?: string };
       if (!extra.reminderId) return;

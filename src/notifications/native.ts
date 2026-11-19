@@ -50,7 +50,7 @@ export async function initNativeChannels() {
     id: CHANNEL_LOUD,
     name: 'Alarmy (głośne)',
     description: 'Głośne przypomnienia – dźwięk alarmu, także w trybie cichym',
-    importance: 5,
+    importance: 4,
     visibility: 1,
     sound: 'alarm.wav',
     vibration: true,

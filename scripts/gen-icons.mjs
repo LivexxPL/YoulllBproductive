@@ -1,7 +1,7 @@
 // Renderuje ikony aplikacji (web/PWA + Android) z SVG przy pomocy Playwright (Chromium).
 // Uruchom: node scripts/gen-icons.mjs
 import { createRequire } from 'node:module';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -58,6 +58,22 @@ if (existsSync(res)) {
     await render(svgs.rounded, 48 * k, join(res, `mipmap-${d}/ic_launcher.png`));
     await render(svgs.circle, 48 * k, join(res, `mipmap-${d}/ic_launcher_round.png`));
     await render(svgs.foreground, 108 * k, join(res, `mipmap-${d}/ic_launcher_foreground.png`));
+  }
+
+  // Ekrany startowe (Android < 12) – te same rozmiary co w szablonie Capacitora
+  for (const dir of readdirSync(res).filter((d) => d.startsWith('drawable'))) {
+    const file = join(res, dir, 'splash.png');
+    if (!existsSync(file)) continue;
+    const head = readFileSync(file).subarray(16, 24);
+    const w = head.readUInt32BE(0);
+    const h = head.readUInt32BE(4);
+    const s = Math.round(Math.min(w, h) * 0.26);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="#F4F5F8"/>
+      <g transform="translate(${(w - s) / 2} ${(h - s) / 2}) scale(${s / 64})">${svgs.rounded.replace(/^<svg[^>]*>/, '').replace('</svg>', '')}</g></svg>`;
+    await page.setViewportSize({ width: w, height: h });
+    await page.setContent(`<html><body style="margin:0">${svg.replace('<svg ', `<svg width="${w}" height="${h}" `)}</body></html>`);
+    writeFileSync(file, await page.screenshot({ clip: { x: 0, y: 0, width: w, height: h } }));
+    console.log('✓', file.replace(root + '/', ''));
   }
 }
 

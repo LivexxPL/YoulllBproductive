@@ -52,7 +52,7 @@
   --danger-soft: rgb(229 72 77 / 0.1);
   --success: #12a37a;
   --warn: #e8a317;
-  --glass: rgb(255 255 255 / 0.78);
+  --glass: rgb(255 255 255 / 0.86);
   --grid-line: rgb(15 23 42 / 0.06);
   --grid-line-half: rgb(15 23 42 / 0.03);
   --event-mix: 14%;
@@ -85,7 +85,7 @@
   --danger-soft: rgb(255 107 112 / 0.14);
   --success: #3ccf9f;
   --warn: #f5b83d;
-  --glass: rgb(20 24 33 / 0.78);
+  --glass: rgb(20 24 33 / 0.86);
   --grid-line: rgb(255 255 255 / 0.06);
   --grid-line-half: rgb(255 255 255 / 0.025);
   --event-mix: 22%;
