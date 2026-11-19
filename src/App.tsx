@@ -14,6 +14,8 @@ import { CalendarScreen } from './screens/CalendarScreen';
 import { AllScreen } from './screens/AllScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { initNativeShell } from './lib/nativeShell';
+import { AlarmOverlay } from './components/AlarmOverlay';
+import { startNotifications } from './notifications/service';
 
 startDataLayer();
 
@@ -30,6 +32,10 @@ export function App() {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [route]);
+
+  useEffect(() => {
+    if (ready) startNotifications().catch((e) => console.warn('[notifications]', e));
+  }, [ready]);
 
   if (!ready) {
     return (
@@ -62,6 +68,7 @@ export function App() {
       </AppShell>
       <QuickAdd />
       <ReminderEditor />
+      <AlarmOverlay />
       <Toaster />
     </MotionConfig>
   );
